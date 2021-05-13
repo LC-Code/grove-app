@@ -21,7 +21,7 @@ public class Consult {
     private String consult_content;
     private String is_callback;
     private Date callback_time;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name="user_code")
     private UserInfo userInfo;
 }

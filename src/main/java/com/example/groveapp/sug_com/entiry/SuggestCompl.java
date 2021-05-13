@@ -10,11 +10,12 @@ import javax.persistence.*;
 @Table(name = "suggest_complaints")
 public class SuggestCompl {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String item_name;
+    @Column(name = "item_code")
     private String item_code;
-    private String sug_cm;
+    @Column(name = "item_name")
+    private String item_name;
+    @Column(name = "sug_com")
+    private String sug_com;
     private String part_name;
     private String title;
     private String context;
@@ -22,5 +23,4 @@ public class SuggestCompl {
     @ManyToOne
     @JoinColumn(name="user_code")
     private UserInfo userInfo;
-
 }

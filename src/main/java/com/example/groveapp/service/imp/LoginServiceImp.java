@@ -34,20 +34,28 @@ public class LoginServiceImp implements LoginService {
     @Value("${wx.baseUrl}")
     String baseUrl;
     @Override
-    @Cacheable
+//    @Cacheable(value="wxSession",key = "")
     public WxLoginRespond getSeesionKeyAndOpenId(String code) throws JsonProcessingException {
         log.info("login 方法执行接收到的数据为"+code);
         RestTemplate template = builder.build();
         Map<String,String> map = new HashMap<String,String>();
+        WxLoginRespond respond = new WxLoginRespond();
         map.put("appid",appId);
         map.put("secret",appSecret);
         map.put("grant_type",grantType);
         map.put("js_code",code);
         String url = baseUrl+"?appid={appid}&secret={secret}&grant_type={grant_type}&js_code={js_code}";
         log.info(url);
-        String response = template.getForObject(url,String.class, map);
+        String response = template.getForObject(url,String.class, new String[]{appId,appSecret,grantType,code});
+        log.info("wx服务返回的结果：：："+response);
         JsonNode jsonNode = mapper.readTree(response);
-        WxLoginRespond wx = new WxLoginRespond(jsonNode.get("session_key").asText(), jsonNode.get("openid").asText());
-        return wx;
+        if(jsonNode.has("errcode")) {
+            respond.setErrcode(jsonNode.get("errcode").asText());
+            respond.setErrmsg(jsonNode.get("errmsg").asText());
+        }else{
+            respond.setSession_key(jsonNode.get("session_key").asText());
+            respond.setOpendid(jsonNode.get("openid").asText());
+        }
+        return respond;
     }
 }

@@ -1,28 +1,24 @@
 package com.example.groveapp.controller;
 
+import com.example.groveapp.entiry.UserInfo;
 import com.example.groveapp.entiry.WxLoginRespond;
+import com.example.groveapp.service.LoginService;
 import com.example.groveapp.service.UserService;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import javafx.scene.shape.Path;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.data.querydsl.QPageRequest;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
+import java.util.UUID;
 
 
 @RestController
@@ -36,43 +32,29 @@ public class UserController {
     UserService service;
     @Autowired
     RestTemplateBuilder builder;
-    @Value("${wx.appId}")
-    String appId;
-    @Value("${wx.appSecret}")
-    String appSecret;
-    @Value("${wx.grantType}")
-    String grantType;
-    @Value("${wx.baseUrl}")
-    String baseUrl;
+    @Autowired
+    LoginService loginService;
 
     @GetMapping(path = "/login/{code}.json")
-    public Object login(@PathVariable String code) throws IOException {
-        log.info("login 方法执行接收到的数据为"+code);
-        RestTemplate template = builder.build();
-        Map<String,String> map = new HashMap<String,String>();
-        map.put("appid",appId);
-        map.put("secret",appSecret);
-        map.put("grant_type",grantType);
-        map.put("js_code",code);
-        String urls = baseUrl+"?appid="+appId+"&secret="+appSecret+"&grant_type=authorization_code&js_code="+code;
-        String url = baseUrl+"?appid={appid}&secret={secret}&grant_type={grant_type}&js_code={js_code}";
-        log.info(urls);
-        String response = template.getForObject(url,String.class, map);
-        /*ParameterizedTypeReference<Map<String, String>> typeReference = new ParameterizedTypeReference<Map<String, String>>(){};
-        ResponseEntity<Map<String, String>> exchange = template.exchange(url,
-                HttpMethod.GET,
-                null,
-                typeReference,
-                map);*/
-        WxLoginRespond wx = new WxLoginRespond();
-        JsonNode jsonNode = mapper.readTree(response);
-        jsonNode.get("session_key").asText();
-        jsonNode.get("openid").asText();
+    public WxLoginRespond login(@PathVariable String code) throws IOException {
+        WxLoginRespond seesionKeyAndOpenId = loginService.getSeesionKeyAndOpenId(code);
+        log.info("返回的sessionKey,openId"+seesionKeyAndOpenId.toString());
+        return seesionKeyAndOpenId;
+    }
 
+    @PostMapping(path = "/save/user.do")
+    public com.example.groveapp.entiry.UserInfo SaveUser(@RequestBody com.example.groveapp.entiry.UserInfo userInfo){
+       log.info("微信端传来的数据："+userInfo.toString());
+        return service.saveUser(userInfo);
 
+    }
 
-        log.info(response);
-        return null;
-
+    @GetMapping(path = "/find/user/{code}.do")
+    @Transactional
+    public com.example.groveapp.entiry.UserInfo findUser(@PathVariable String code){
+        log.info("根据code查询user数据" + code);
+        com.example.groveapp.entiry.UserInfo userByCode = this.service.findUserByCode(code);
+        log.info(userByCode.getCode());
+        return userByCode;
     }
 }
