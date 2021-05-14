@@ -7,4 +7,7 @@ import java.util.List;
 public interface AppointmentService {
     Appointment saveAppointment(Appointment appointment);
     List<Appointment> findAll();
+    int saveAppointmentBySql(Appointment app);
+
+
 }

@@ -57,4 +57,13 @@ public class UserController {
         log.info(userByCode.getCode());
         return userByCode;
     }
+    @PostMapping("/update/user.do")
+    public int updateUserInfoBySql(@RequestBody UserInfo user){
+        int i = service.updateUserInfoBysql(user);
+        return i;
+    }
+    @PostMapping("/Mysave/user.do")
+    public int MyUserSave(@RequestBody UserInfo userInfo){
+        return 0;
+    }
 }

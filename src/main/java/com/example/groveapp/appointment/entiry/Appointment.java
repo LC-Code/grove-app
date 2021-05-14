@@ -13,6 +13,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "appointment")
 public class Appointment {
     public interface FindAppointmentForList{} //查询Json
@@ -55,8 +56,6 @@ public class Appointment {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonView(FindAppointmentForList.class)
     private Date CreateDate;
-
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_code")
     private UserInfo userInfo;

@@ -32,5 +32,9 @@ public class AppointmentController {
     }
 
 
+    @PostMapping(path = "/appointment/savaBySql.do")
+    public int savaBySql(@RequestBody Appointment appointment){
+        return service.saveAppointmentBySql(appointment);
+    }
 
 }
