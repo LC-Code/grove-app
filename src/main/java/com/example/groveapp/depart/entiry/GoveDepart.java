@@ -1,12 +1,8 @@
 package com.example.groveapp.depart.entiry;
 
-import com.example.groveapp.appointment.entiry.AppointmentItem;
 import lombok.Data;
-import lombok.Generated;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
@@ -17,14 +13,16 @@ public class GoveDepart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "part_code")
-    private String part_code;
+    private String partCode;
+
     @Column(name = "part_name")
-    private String part_name;
+    private String partName;
+
     @Column(name = "part_power")
-    private String part_power;
+    private String partPower;
+
     @Column(name = "part_level")
-    private String part_level;
-    @OneToMany(mappedBy = "depart")
-    private Set<AppointmentItem> items;
+    private String partLevel;
+
 
 }

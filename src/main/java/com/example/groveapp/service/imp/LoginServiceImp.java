@@ -34,9 +34,11 @@ public class LoginServiceImp implements LoginService {
     @Value("${wx.baseUrl}")
     String baseUrl;
     @Override
-    @Cacheable
+//    @Cacheable
     public WxLoginRespond getSeesionKeyAndOpenId(String code) throws JsonProcessingException {
+
         log.info("login 方法执行接收到的数据为"+code);
+        WxLoginRespond wx = null;
         RestTemplate template = builder.build();
         Map<String,String> map = new HashMap<String,String>();
         map.put("appid",appId);
@@ -46,8 +48,11 @@ public class LoginServiceImp implements LoginService {
         String url = baseUrl+"?appid={appid}&secret={secret}&grant_type={grant_type}&js_code={js_code}";
         log.info(url);
         String response = template.getForObject(url,String.class, map);
-        JsonNode jsonNode = mapper.readTree(response);
-        WxLoginRespond wx = new WxLoginRespond(jsonNode.get("session_key").asText(), jsonNode.get("openid").asText());
+        if(response.contains("session_key")) {
+            JsonNode jsonNode = mapper.readTree(response);
+            wx = new WxLoginRespond(jsonNode.get("session_key").asText(), jsonNode.get("openid").asText());
+            return wx;
+        }
         return wx;
     }
 }

@@ -13,15 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImp implements UserService {
     @Autowired
     UserRepository userDao;
-    @Override
+    /*@Override
     @Cacheable("#UserInfo.id")
     public UserInfo findUserById(String code) {
         UserInfo byId = userDao.findByCode(code);
         return byId;
+    }*/
+
+    @Override
+    public UserInfo findUserByCode(String userCode) {
+        UserInfo one = userDao.getOne(userCode);
+        return one;
     }
 
     @Override
-    @Cacheable("#user.id")
+//    @Cacheable("#user.id")
     public UserInfo saveUser(UserInfo user) {
         UserInfo cacheUser = (UserInfo) userDao.save(user);
         return cacheUser;

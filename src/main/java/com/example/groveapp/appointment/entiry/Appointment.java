@@ -1,32 +1,42 @@
 package com.example.groveapp.appointment.entiry;
 
-import com.example.groveapp.entiry.UserInfo;
-import lombok.CustomLog;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "appointment")
 public class Appointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GenericGenerator(name = "app_code_uuid",strategy = "uuid")
+    @GeneratedValue(generator = "app_code_uuid")
     @Column(name = "app_code")
     private String appCode;
-    @OneToOne
-    @JoinColumn(name = "item_code")
-    private AppointmentItem item;
-    private Date app_time;
-    private Date accept_time;
-    private String is_accept;
-    private String no_accept_info;
-    private String evaluate;
-    @ManyToOne
-    @JoinColumn(name = "user_code")
-    private UserInfo userInfo;
+
+    @Column(name = "item_code")
+    private String itemCode;
+
+    @Column(name = "app_time_am")
+    private String appTimeAm;
+
+    @Column(name = "app_time")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date AppTime;
+
+    @Column(name = "accept_time")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date acceptTime;
+
+    @Column(name = "create_date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date createDate;
+
+    @Column(name = "user_code")
+    private String userCode;
+
+
 }

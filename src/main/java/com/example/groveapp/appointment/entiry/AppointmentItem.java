@@ -13,13 +13,17 @@ public class AppointmentItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "item_code")
-    private String code;
+    private String itemCode;
+
     @Column(name = "item_name")
     private String itemName;
+
     @Column(name = "dispose_type")
     private String disposeType;
-   @ManyToOne
-   @JoinColumn(name = "part_code")
-    private GoveDepart depart;
+
+    @Column(name = "part_code")
+    private String partCode;
+
 }

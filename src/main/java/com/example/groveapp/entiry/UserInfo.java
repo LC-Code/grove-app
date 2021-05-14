@@ -1,25 +1,22 @@
 package com.example.groveapp.entiry;
 
-import com.example.groveapp.appointment.entiry.Appointment;
-import com.example.groveapp.sug_com.entiry.Consult;
-import com.example.groveapp.sug_com.entiry.SuggestCompl;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "user_info")
 public class UserInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_code")
-    private String code;
+    private String userCode;
     @Column(name = "user_name")
-    private String name;
+    private String userNname;
     @Column(name = "password")
     private String password;
     @Column(name = "id_type")
@@ -27,26 +24,19 @@ public class UserInfo {
     @Column(name = "id_cord")
     private String idCode;
     @Column(name = "user_sex")
-    private String sex;
+    private String userSex;
     @Column(name = "user_eduction")
-    private String eduction;
+    private String userEduction;
     @Column(name = "user_birthday")
-    private Date birthday;
+    private Date userBirthday;
     @Column(name = "industry")
     private String industry;
     @Column(name = "profession")
     private String profession;
-    @Column(name = "CreateDate")
+    @Column(name = "create_date")
     private Date CreateDate;
-    @Column(name = "Pid")
-    private int isDelete;
     @Column(name = "tel_number")
     private String telNumber;
-    @OneToMany(mappedBy = "userInfo")
-    private Set<Consult> consults =  new HashSet<Consult>();
-    @OneToMany(mappedBy = "userInfo")
-    private Set<SuggestCompl> compls = new HashSet<SuggestCompl>();
-    @OneToMany(mappedBy ="userInfo")
-    private Set<Appointment> appointments = new HashSet<>();
+
 
 }
