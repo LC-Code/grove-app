@@ -35,13 +35,13 @@ public class UserController {
         return seesionKeyAndOpenId;
     }
 
-    @GetMapping("/user/find/{code}.do")
+    @GetMapping("/user/find/{code}.json")
     public UserInfo getOneUser(@PathVariable String code){
         UserInfo userByCode = userService.findUserByCode(code);
         return userByCode;
     }
 
-    @PostMapping("/user/save.json")
+    @PostMapping("/user/save.do")
     public UserInfo saveUser(@RequestBody UserInfo userInfo){
         UserInfo userInfo1 = userService.saveUser(userInfo);
         return userInfo;
