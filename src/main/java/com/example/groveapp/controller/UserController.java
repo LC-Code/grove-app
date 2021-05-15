@@ -35,9 +35,12 @@ public class UserController {
 
     @GetMapping("/user/find/{code}.json")
     public UserInfo getOneUser(@PathVariable String code){
-        log.info("用户code "+code );
-        UserInfo userByCode = userService.findUserByCode(code);
-        return userByCode;
+        if(code != null){
+            log.info("用户code "+code );
+            UserInfo userByCode = userService.findUserByCode(code);
+            return userByCode;
+        }
+       return null;
     }
 
     @PostMapping("/user/save.do")

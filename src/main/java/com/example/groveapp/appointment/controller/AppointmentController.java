@@ -2,6 +2,7 @@ package com.example.groveapp.appointment.controller;
 
 import com.example.groveapp.appointment.entiry.Appointment;
 import com.example.groveapp.appointment.service.AppointmentService;
+import com.example.groveapp.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,8 @@ import java.util.List;
 public class AppointmentController {
     @Autowired
     AppointmentService service;
+    @Autowired
+    RedisService redisService;
 
 
     @GetMapping("/appointment/find/{userCode}.json")
@@ -28,6 +31,7 @@ public class AppointmentController {
 
     @GetMapping("/appointment/find/{userCode}/{isAccept}.json")
     public List<Object> findNoAceept(@PathVariable String userCode,@PathVariable String isAccept){
+
         List<Object> noAceept = service.findNoAceept(userCode, isAccept);
         return noAceept;
     }
