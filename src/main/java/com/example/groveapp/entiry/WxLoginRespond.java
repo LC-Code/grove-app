@@ -2,12 +2,14 @@ package com.example.groveapp.entiry;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /*@Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor*/
 @Data
-public class WxLoginRespond {
+public class WxLoginRespond implements Serializable {
    private String session_key;
    private String opendid;
    private String errcode;

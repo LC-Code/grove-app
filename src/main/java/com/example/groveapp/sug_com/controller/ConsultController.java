@@ -23,6 +23,11 @@ public class ConsultController {
     public Consult save(@RequestBody Consult consult){
         Consult saveConsul = service.saveConsul(consult);
         return saveConsul;
+    }
 
+    @GetMapping(path = "/consult/find/simple/{code}.json")
+    public List<Object> findSimple(@PathVariable String code){
+        List<Object> simpleListByUserCode = service.findSimpleListByUserCode(code);
+        return simpleListByUserCode;
     }
 }

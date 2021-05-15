@@ -13,8 +13,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-
-
 @RestController
 public class UserController {
 
@@ -37,6 +35,7 @@ public class UserController {
 
     @GetMapping("/user/find/{code}.json")
     public UserInfo getOneUser(@PathVariable String code){
+        log.info("用户code "+code );
         UserInfo userByCode = userService.findUserByCode(code);
         return userByCode;
     }

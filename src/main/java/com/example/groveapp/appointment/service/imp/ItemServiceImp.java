@@ -13,15 +13,21 @@ import java.util.List;
 public class ItemServiceImp implements ItemService {
     @Autowired
     ItemRep itemDao;
-    @Override
+  /*  @Override
     public List<AppointmentItem> findAllByDepartCode(String code) {
         List<AppointmentItem> allByPartCode = itemDao.findAllByPartCode(code);
         return allByPartCode;
     }
-
+*/
     @Override
     public List<AppointmentItem> findAll() {
         List<AppointmentItem> all = itemDao.findAll();
         return all;
+    }
+
+    @Override
+    public List<Object> findAllByDepartCode(String code) {
+        List<Object> allByPartCode = itemDao.findAllByPartCode(code);
+        return allByPartCode;
     }
 }

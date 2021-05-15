@@ -23,4 +23,10 @@ public class SuggestController {
         List<SuggestCompl> allByUserCode = service.findAllByUserCode(code);
         return allByUserCode;
     }
+
+    @GetMapping(path = "/suggest/find/simple/{code}.json")
+    public List<Object> findSimple(@PathVariable String code){
+        List<Object> simpleListByUserCode = service.findSimpleListByUserCode(code);
+        return simpleListByUserCode;
+    }
 }

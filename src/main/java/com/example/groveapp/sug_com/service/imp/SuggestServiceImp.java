@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +18,7 @@ public class SuggestServiceImp  implements SuggestService {
 
     @Override
     public SuggestCompl save(SuggestCompl suggest) {
+        suggest.setCreateDate(new Date());
         SuggestCompl save = dao.save(suggest);
         return save;
     }
@@ -25,5 +27,11 @@ public class SuggestServiceImp  implements SuggestService {
     public List<SuggestCompl> findAllByUserCode(String code) {
         List<SuggestCompl> allByUserCode = dao.findAllByUserCode(code);
         return allByUserCode;
+    }
+
+    @Override
+    public List<Object> findSimpleListByUserCode(String code) {
+        List<Object> simpleListByUserCode = dao.findSimpleListByUserCode(code);
+        return simpleListByUserCode;
     }
 }

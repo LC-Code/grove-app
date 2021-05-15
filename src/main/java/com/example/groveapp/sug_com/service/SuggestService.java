@@ -8,4 +8,5 @@ public interface SuggestService {
     SuggestCompl save(SuggestCompl suggest);
 
     List<SuggestCompl> findAllByUserCode(String code);
+    List<Object> findSimpleListByUserCode(String code);
 }

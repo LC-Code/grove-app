@@ -14,5 +14,7 @@ public interface ItemRep extends JpaRepository<AppointmentItem,String> {
     @Override
     List<AppointmentItem> findAll();
 
-    List<AppointmentItem> findAllByPartCode(String code);
+//    List<AppointmentItem> findAllByPartCode(String code);
+    @Query("select a.itemCode,a.itemName from AppointmentItem a where a.partCode= ?1")
+    List<Object> findAllByPartCode(String code);
 }

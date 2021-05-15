@@ -7,4 +7,5 @@ import java.util.List;
 public interface ConsultService {
     Consult saveConsul(Consult consult);
     List<Consult> findAllByUserCode(String code);
+    List<Object> findSimpleListByUserCode(String code);
 }

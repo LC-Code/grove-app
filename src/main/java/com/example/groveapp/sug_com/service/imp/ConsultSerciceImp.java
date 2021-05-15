@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +18,7 @@ public class ConsultSerciceImp implements ConsultService {
     ConsultRep dao;
     @Override
     public Consult saveConsul(Consult consult) {
+        consult.setCreatDate(new Date());
         Consult save = dao.save(consult);
         return save;
     }
@@ -26,4 +28,11 @@ public class ConsultSerciceImp implements ConsultService {
         List<Consult> allByUserCode = dao.findAllByUserCode(code);
         return allByUserCode;
     }
+
+    @Override
+    public List<Object> findSimpleListByUserCode(String code) {
+        List<Object> simpleListByUserCode = dao.findSimpleListByUserCode(code);
+        return simpleListByUserCode;
+    }
+
 }
