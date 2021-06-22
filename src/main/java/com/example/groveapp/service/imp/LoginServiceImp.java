@@ -51,6 +51,7 @@ public class LoginServiceImp implements LoginService {
         if(response.contains("session_key")) {
             JsonNode jsonNode = mapper.readTree(response);
             wx = new WxLoginRespond(jsonNode.get("session_key").asText(), jsonNode.get("openid").asText());
+            log.info("opendid" + wx);
             return wx;
         }
         return wx;
